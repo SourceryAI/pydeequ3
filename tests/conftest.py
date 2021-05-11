@@ -2,13 +2,13 @@
 # pylint: disable=redefined-outer-name
 import logging
 
-from pyspark.sql import SparkSession
-
 from pydeequ import set_deequ_maven_config
 
 
 # @pytest.yield_fixture(autouse=True)
 def setup_pyspark():
+    from pyspark.sql import SparkSession
+
     logger = logging.getLogger("logger")
     logger.info("\nSetup Airflow DB connections and DAG")
 

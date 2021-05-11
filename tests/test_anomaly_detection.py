@@ -8,24 +8,13 @@ from pydeequ.analyzers import *
 from pydeequ.anomaly_detection import *
 from pydeequ.repository import *
 from pydeequ.verification import *
+from tests.conftest import setup_pyspark
 
 
 class TestAnomalies(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        deequ_maven_coord = "com.amazon.deequ:deequ:1.2.2-spark-3.0"
-        # This package is excluded because it causes an error in the SparkSession fig
-        f2j_maven_coord = "net.sourceforge.f2j:arpack_combined_all"
-        cls.spark = (
-            SparkSession.builder.master("local[*]")
-            .config("spark.executor.memory", "2g")
-            .config("spark.jars.packages", deequ_maven_coord)
-            .config("spark.pyspark.python", "/usr/bin/python3")
-            .config("spark.pyspark.driver.python", "/usr/bin/python3")
-            .config("spark.jars.excludes", f2j_maven_coord)
-            .appName("test-anomalydetection-local")
-            .getOrCreate()
-        )
+        cls.spark = setup_pyspark().appName("test-anomalydetection-local").getOrCreate()
         cls.sc = cls.spark.sparkContext
 
         cls.df_1 = cls.sc.parallelize(

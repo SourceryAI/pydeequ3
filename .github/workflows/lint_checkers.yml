@@ -1,0 +1,30 @@
+name: PreCommitChecks
+
+on:
+  push:
+    branches:
+      - master
+      - '!release*'
+  pull_request:
+    branches:
+      - master
+      - '!release*'
+jobs:
+  linting:
+    name: "Run checks: black, flake8, isort, bandit etc.."
+    runs-on: ubuntu-latest
+    steps:
+      #----------------------------------------------
+      # Checkout, SetUp Python, Load Cache and Lint
+      #----------------------------------------------
+      - uses: actions/checkout@v2
+      # Install Python
+      - uses: actions/setup-python@v2
+        with:
+            python-version: 3.8
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip
+          restore-keys: ${{ runner.os }}-pip
+      - uses: pre-commit/action@v2.0.2

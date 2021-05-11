@@ -5,7 +5,7 @@ description = ""
 authors = ["ChethanUK <chethanuk@outlook.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 numpy = "^1.20.3"
 pandas = "^1.2.4"
 pyspark = { version = ">=2.4.7", optional = true }
