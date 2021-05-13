@@ -38,66 +38,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - java: 8
-            hadoop: 2.7
-            spark-version: 2.4.7
-            python-version: 3.6
-          - java: 8
-            hadoop: 3.2
-            spark-version: 3.0.2
-            python-version: 3.6
-          - java: 11
-            hadoop: 3.2
-            spark-version: 3.0.2
-            python-version: 3.6
-          - java: 8
-            hadoop: 2.7
-            spark-version: 3.0.2
-            python-version: 3.6
-          - java: 11
-            hadoop: 2.7
-            spark-version: 3.0.2
-            python-version: 3.6
-          - java: 8
-            hadoop: 2.7
-            spark-version: 3.1.1
-            python-version: 3.6
-          - java: 11
-            hadoop: 2.7
-            spark-version: 3.1.1
-            python-version: 3.6
-          - java: 8
-            hadoop: 3.2
-            spark-version: 3.1.1
-            python-version: 3.6
-          - java: 11
-            hadoop: 3.2
-            spark-version: 3.1.1
-            python-version: 3.6
-          - java: 8
-            hadoop: 3.2
-            spark-version: 3.1.1
-            python-version: 3.7
-          - java: 11
-            hadoop: 3.2
-            spark-version: 3.1.1
-            python-version: 3.7
-          - java: 8
-            hadoop: 3.2
-            spark-version: 3.1.1
-            python-version: 3.8
-          - java: 11
-            hadoop: 3.2
-            spark-version: 3.1.1
-            python-version: 3.8
+        hadoop: [3.2, 2.7]
+        java: [8, 11]
+        spark-version: [3.0.2]
+        python-version: [3.6, 3.7, 3.8]
+        scala-version: [2.12]
     # Run on ubuntu
     runs-on: ubuntu-20.04
     env:
       GITHUB_PREV_SHA: ${{ github.event.before }}
       PYTHON_VERSION: ${{ matrix.python-version }}
       SPARK_VERSION: ${{ matrix.spark-version }}
-      SCALA_VERSION: 2.12
+      SCALA_VERSION: ${{ matrix.scala-version }}
     timeout-minutes: 60
     steps:
       - name: Checkout Spark repository
@@ -117,11 +69,6 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'adopt'
 
-      - name: Change Scala ${{ matrix.scala }} version
-        run: |
-          ls
-          ./dev/change-scala-version.sh ${{ matrix.scala }}
-
       # Setup Python
       - name: Install Poetry
         uses: snok/install-poetry@v1.1.4
@@ -139,8 +86,11 @@ jobs:
       - name: Check Java ${{ matrix.java }} version
         run: java -version
 
-      - name: Check Scala ${{ matrix.scala }} version
-        run: scala -version
+      # - name: Check Scala ${{ matrix.scala }} version
+      #   run: scala -version
+
+      - name: Check Python ${{ matrix.python-version }} version
+        run: python -V
 
       - name: Check ${{ matrix.spark-version }} version
         run: spark-submit --version
@@ -179,9 +129,13 @@ jobs:
           df -hm
 
       # Install dependencies if cache does not exist
-      - name: Install poetry dependencies
+      - name: Install poetry dependencies if no cache hit
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry add --no-interaction pyspark==${{ matrix.spark-version }} && poetry install --no-interaction --no-root
+      - name: Install poetry dependencies if cache hit
+        if: steps.cached-poetry-dependencies.outputs.cache-hit == 'true'
+        run: poetry add --no-interaction pyspark==${{ matrix.spark-version }}
+
       - name: Install the package
         run: poetry install --no-interaction
 
@@ -202,3 +156,25 @@ jobs:
       - name: Check Disk Size after Build
         run: |
           df -hm
+
+      #----------------------------------------------
+      # Build and Publish the package
+      #----------------------------------------------
+      - name: Build the package
+        run: |
+          poetry build
+
+      - name: Publish to Test PyPI
+        if: startsWith(github.event.ref, 'refs/tags') || github.event_name == 'release'
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: ${{ secrets.TEST_PYPI_API_USERNAME }}
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+
+      - name: Publish distribution 📦 to PyPI
+        if: startsWith(github.event.ref, 'refs/tags') || github.event_name == 'release'
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: ${{ secrets.PYPI_API_USERNAME }}
+          password: ${{ secrets.PYPI_API_TOKEN }}
