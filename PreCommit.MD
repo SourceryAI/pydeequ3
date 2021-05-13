@@ -34,6 +34,13 @@ Now on every commit, `pre-commit` will use a git hook to run the tools.
 **Warning: the first commit will take some time because the tools are being installed by
 `pre-commit`**
 
+## Poetry
+
+```bash
+# To check latest version of packages
+poetry show --latest
+```
+
 ### Resolving failed commits
 
 * If `black` or `isort` fail, they have reformatted your code. `git add` and `git commit`

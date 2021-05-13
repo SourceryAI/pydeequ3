@@ -2,9 +2,9 @@
 import unittest
 
 import pytest
-from pyspark.sql import Row, SparkSession
+from pyspark.sql import Row
 
-from pydeequ import PyDeequSession, set_deequ_maven_config
+from pydeequ import PyDeequSession
 from pydeequ.analyzers import (
     AnalyzerContext,
     ApproxCountDistinct,
@@ -33,27 +33,13 @@ from pydeequ.analyzers import (
     Uniqueness,
     UniqueValueRatio,
 )
+from tests.conftest import setup_pyspark
 
 
 class TestAnalyzers(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        deequ_maven_coord = set_deequ_maven_config()  # TODO: get Maven Coord from Configs
-        # This package is excluded because it causes an error in the SparkSession fig
-        f2j_maven_coord = "net.sourceforge.f2j:arpack_combined_all"
-        cls.spark = (
-            SparkSession.builder.master("local[*]")
-            .config("spark.executor.memory", "2g")
-            .config("spark.jars.packages", deequ_maven_coord)
-            .config("spark.pyspark.python", "/usr/bin/python3")
-            .config("spark.pyspark.driver.python", "/usr/bin/python3")
-            .config("spark.jars.excludes", f2j_maven_coord)
-            .config("spark.driver.extraJavaOptions", "-XX:+UseG1GC")
-            .config("spark.executor.extraJavaOptions", "-XX:+UseG1GC")
-            .config("spark.sql.autoBroadcastJoinThreshold", "-1")
-            .appName("test-analyzers-local")
-            .getOrCreate()
-        )
+        cls.spark = setup_pyspark().appName("test-analyzers-local").getOrCreate()
         # cls.AnalysisRunner = AnalysisRunner(cls.spark)
         cls.pydeequ_session = PyDeequSession(cls.spark)
         cls.AnalysisRunner = cls.pydeequ_session.createAnalysisRunner()

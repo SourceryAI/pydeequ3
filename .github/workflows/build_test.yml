@@ -10,37 +10,24 @@ on:
       - master
       - '!release*'
 jobs:
-  linting:
-    name: "Run Pre-commit checks: black, flake8, isort, bandit etc.."
-    runs-on: ubuntu-latest
-    steps:
-      #----------------------------------------------
-      # Checkout, SetUp Python, Load Cache and Lint
-      #----------------------------------------------
-      - uses: actions/checkout@v2
-      # Install Python
-      - uses: actions/setup-python@v2
-        with:
-            python-version: 3.8
-      - uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip
-          restore-keys: ${{ runner.os }}-pip
-      - uses: pre-commit/action@v2.0.2
   build:
-    name: "Build Deequ with Python ${{ matrix.python-version }} JDK ${{ matrix.java }}, Hadoop ${{ matrix.hadoop }}, Spark ${{ matrix.spark-version }} in ubuntu-20.04"
+    name: "BuildTest with Python ${{ matrix.python-version }} JDK ${{ matrix.java }}, Hadoop ${{ matrix.hadoop }}, Spark ${{ matrix.spark-version }}"
     # os: [ubuntu-latest, macos-latest, windows-latest]
     strategy:
       fail-fast: false
       matrix:
         include:
-          - java: 8
-            hadoop: 2.7
-            spark-version: 2.4.7
+          # - java: 8
+          #   hadoop: 2.7
+          #   spark-version: 2.4.7
+          #   python-version: 3.7.7
+          #   scala: 2.11
+          - java: 11
+            hadoop: 3.2
+            spark-version: 3.0.2
             python-version: 3.7
             scala: 2.12
-          - java: 11
+          - java: 8
             hadoop: 3.2
             spark-version: 3.0.2
             python-version: 3.7
@@ -97,6 +84,9 @@ jobs:
       # - name: Check Scala ${{ matrix.scala }} version
       #   run: scala -version
 
+      - name: Check Python ${{ matrix.python-version }} version
+        run: python -V
+
       - name: Check ${{ matrix.spark-version }} version
         run: spark-submit --version
 
@@ -134,9 +124,13 @@ jobs:
           df -hm
 
       # Install dependencies if cache does not exist
-      - name: Install poetry dependencies
+      - name: Install poetry dependencies if no cache hit
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry add --no-interaction pyspark==${{ matrix.spark-version }} && poetry install --no-interaction --no-root
+      - name: Install poetry dependencies if cache hit
+        if: steps.cached-poetry-dependencies.outputs.cache-hit == 'true'
+        run: poetry add --no-interaction pyspark==${{ matrix.spark-version }}
+
       - name: Install the package
         run: poetry install --no-interaction
 

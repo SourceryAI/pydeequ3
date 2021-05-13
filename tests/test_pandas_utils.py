@@ -4,7 +4,6 @@ import unittest
 
 import numpy as np
 from pandas import DataFrame as pandasDF
-from pyspark.sql import SparkSession
 
 from pydeequ import PyDeequSession
 from pydeequ.analyzers import *
@@ -12,27 +11,13 @@ from pydeequ.checks import *
 from pydeequ.profiles import ColumnProfilerRunner
 from pydeequ.suggestions import *
 from pydeequ.verification import *
+from tests.conftest import setup_pyspark
 
 
 class TestPandasUtils(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        deequ_maven_coord = "com.amazon.deequ:deequ:1.2.2-spark-3.0"  # TODO: get Maven Coord from Configs
-        # This package is excluded because it causes an error in the SparkSession fig
-        f2j_maven_coord = "net.sourceforge.f2j:arpack_combined_all"
-        cls.spark = (
-            SparkSession.builder.master("local[*]")
-            .config("spark.executor.memory", "2g")
-            .config("spark.jars.packages", deequ_maven_coord)
-            .config("spark.pyspark.python", "/usr/bin/python3")
-            .config("spark.pyspark.driver.python", "/usr/bin/python3")
-            .config("spark.jars.excludes", f2j_maven_coord)
-            .config("spark.driver.extraJavaOptions", "-XX:+UseG1GC")
-            .config("spark.executor.extraJavaOptions", "-XX:+UseG1GC")
-            .config("spark.sql.autoBroadcastJoinThreshold", "-1")
-            .appName("test-analyzers-local")
-            .getOrCreate()
-        )
+        cls.spark = setup_pyspark().appName("test-analyzers-local").getOrCreate()
         cls.pydeequ_session = PyDeequSession(cls.spark)
         cls.AnalysisRunner = cls.pydeequ_session.createAnalysisRunner()
         cls.ColumnProfilerRunner = ColumnProfilerRunner(cls.spark)
