@@ -8,11 +8,13 @@ authors = ["ChethanUK <chethanuk@outlook.com>"]
 python = "^3.7"
 numpy = "^1.20.3"
 pandas = "^1.2.4"
-pyspark = { version = ">=2.4.7", optional = true }
+pyspark = { version = "3.0.2", optional = true }
 
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
+pytest-cov = "^2.11.1"
+coverage = "^5.5"
 pytest-runner = "^5.3.0"
 pytest-xdist = {extras = ["psutil"], version = "^2.2.1"}
 #pytest-parallel = "^0.1.0"
@@ -23,7 +25,6 @@ pytest-flake8 = "^1.0.7"
 pre-commit = "^2.12.1"
 pytest-rerunfailures = "^9.1.1"
 twine = "^3.4.1"
-pytest-cov = "^2.11.1"
 safety = "^1.10.3"
 
 [tool.poetry.extras]
@@ -87,8 +88,14 @@ python_version = 3.8
 #[mypy-pyspark.*]
 #ignore_missing_imports = True
 
+# pytest -n 2 --reruns 3 --reruns-delay 5 --dist loadscope --tx 2*popen//python=python
 [pytest]
 testpaths = "tests"
 norecursedirs = ".git .* *.egg* old docs dist build"
 cache_dir = "./.pytest_cache"
 python_files = "*test_*.py"
+addopts = "-n3 --reruns 3 --reruns-delay 5 --dist loadscope"
+# addopts = --tx 3*popen//python=python
+looponfailroots = "pydeequ3 tests"
+# rsyncdirs = . mypkg helperpkg
+# rsyncignore = .hg

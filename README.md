@@ -2,7 +2,10 @@
 
 PyDeequ is a Python API for [Deequ](https://github.com/awslabs/deequ), a library built on top of Apache Spark for defining "unit tests for data", which measure data quality in large datasets. PyDeequ is written to support usage of Deequ in Python.
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Coverage](https://img.shields.io/badge/coverage-90%25-green)
+[![CodeQL](https://github.com/ChethanUK/pydeequ3/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ChethanUK/pydeequ3/actions/workflows/codeql-analysis.yml) [![BuildAndTest](https://github.com/ChethanUK/pydeequ3/actions/workflows/build_test.yml/badge.svg)](https://github.com/ChethanUK/pydeequ3/actions/workflows/build_test.yml) [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/ChethanUK/pydeequ3.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ChethanUK/pydeequ3/context:python)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+
 
 There are 4 main components of Deequ, and they are:
 

@@ -1,0 +1,3 @@
+[run]
+omit=
+	pydeequ3/__init__.py

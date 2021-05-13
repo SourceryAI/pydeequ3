@@ -1,0 +1,11 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 83.33%
+    patch:
+      default:
+        target: 75%
+
+ignore:
+  - tests/*

@@ -238,6 +238,7 @@ class Check:
         :return: isPrimaryKey self: A Check.scala object that asserts completion in the columns.
         """
         hint = self._jvm.scala.Option.apply(hint)
+        print(f"Unsolved integration: {hint}")
         raise NotImplementedError("Unsolved integration of Python tuple => varArgs")
 
     def hasUniqueness(self, columns, assertion, hint=None):

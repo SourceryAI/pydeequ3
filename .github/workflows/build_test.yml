@@ -151,7 +151,30 @@ jobs:
         run: |
           # source .venv/bin/activate
           # python -m pytest
-          poetry run pytest
+
+          # Run coverage report
+          COVERAGE_HTML="--cov-report term-missing"
+          COVERAGE_XML="--cov-report xml:cov.xml"
+          COVERAGE_ANNOTATE="--cov-report annotate:cov_annotate"
+          COVERAGE_TERM="--cov-report term-missing"
+          COVERAGE_REPORT_CONF="${COVERAGE_HTML} ${COVERAGE_XML} ${COVERAGE_TERM}"
+          CODE_COVERAGE="${COVERAGE_REPORT_CONF} --cov=./"
+
+          poetry run coverage run -m pytest
+          poetry run coverage xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          # files: ./coverage*.xml
+          # directory: ./
+          flags: unittests
+          env_vars: OS,PYTHON
+          name: codecov-${{ matrix.os}}-python${{ matrix.python-version }}
+          fail_ci_if_error: true
+          # path_to_write_report: ./codecov_report.xml
+          verbose: true
 
       - name: Check Disk Size after Build
         run: |
