@@ -102,7 +102,9 @@ def java_list_to_python_list(java_list: str, datatype):
     start = java_list.index('(')
     end = java_list.index(')')
     empty_val = '' if datatype == str else None
-    vals = [datatype(i) if i != '' else empty_val for i in java_list[start + 1 : end].split(',')]
-    return vals
+    return [
+        datatype(i) if i != '' else empty_val
+        for i in java_list[start + 1 : end].split(',')
+    ]
 
 # TODO Tuple => Python Tuple

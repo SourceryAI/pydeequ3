@@ -296,7 +296,7 @@ class ColumnProfile:
         self._approximateNumDistinctValues = java_column_profile.approximateNumDistinctValues()
         self._dataType = java_column_profile.dataType()
         self._typeCounts = scala_map_to_dict(self._jvm, java_column_profile.typeCounts())
-        self._isDataTypeInferred = True if java_column_profile.isDataTypeInferred() == "true" else False
+        self._isDataTypeInferred = java_column_profile.isDataTypeInferred() == "true"
         if get_or_else_none(self._java_column_profile.histogram()):
             self._histogram = [
                 DistributionValue(k, v.absolute(), v.ratio())

@@ -24,8 +24,7 @@ class MetricsRepository:
         """
         tempDir = spark_session._jvm.com.google.common.io.Files.createTempDir()
         f = spark_session._jvm.java.io.File(tempDir, filename)
-        f_path = f.getAbsolutePath()
-        return f_path
+        return f.getAbsolutePath()
 
     def _check_RepositoryLoader(self):
         """

@@ -99,7 +99,7 @@ class Check:
         self._Check = self._check_java_class(
             self._java_level, self.description, getattr(self._check_java_class, "apply$default$3")()
         )
-        self.constraints = constraints if constraints else []
+        self.constraints = constraints or []
         for constraint in self.constraints:
             self.addConstraint(constraint)
 
@@ -779,7 +779,7 @@ class Check:
         :return: isContainedIn self: A Check object that runs the assertion on the columns.
         """
         arr = self._spark_session.sparkContext._gateway.new_array(self._jvm.java.lang.String, len(allowed_values))
-        for i in range(0, len(allowed_values)):
+        for i in range(len(allowed_values)):
             arr[i] = allowed_values[i]
         self._Check = self._Check.isContainedIn(column, arr)
         return self

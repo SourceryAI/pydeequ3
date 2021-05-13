@@ -18,7 +18,7 @@ def setup_pyspark():
     # This package is excluded because it causes an error in the SparkSession fig
     f2j_maven_coord = "net.sourceforge.f2j:arpack_combined_all"
 
-    spark_builder = (
+    return (
         SparkSession.builder.master("local[*]")
         .config("spark.executor.memory", "2g")
         .config("spark.jars.packages", deequ_maven_coord)
@@ -29,7 +29,5 @@ def setup_pyspark():
         .config("spark.executor.extraJavaOptions", "-XX:+UseG1GC")
         .config("spark.sql.autoBroadcastJoinThreshold", "-1")
     )
-
-    return spark_builder
     # , logger
     # logger.info("\nTeardown Airflow DB connections and DAG")

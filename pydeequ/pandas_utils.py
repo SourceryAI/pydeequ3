@@ -68,9 +68,11 @@ class PandasConverter:
     def pandasDF_to_pysparkDF(cls, spark_session: SparkSession, pandas_df: pandasDF):
         columns = list(pandas_df.columns)
         types = list(pandas_df.dtypes)
-        struct_list = []
-        for column, typo in zip(columns, types):
-            struct_list.append(cls._define_structure(column, typo))
+        struct_list = [
+            cls._define_structure(column, typo)
+            for column, typo in zip(columns, types)
+        ]
+
         p_schema = StructType(struct_list)
         return spark_session.createDataFrame(pandas_df, p_schema)
 
