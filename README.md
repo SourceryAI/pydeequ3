@@ -31,14 +31,14 @@ The following will quickstart you with some basic usage. For more in-depth examp
 You can install [PyDeequ via pip](https://pypi.org/project/pydeequ/).
 
 ```bash
-pip install pydeequ
+pip install pydeequ3
 ```
 
 ### Set up a PySpark session
 
 ```python
 from pyspark.sql import SparkSession, Row
-import pydeequ
+import pydeequ3 as pydeequ
 
 spark = (SparkSession
     .builder
@@ -55,7 +55,10 @@ df = spark.sparkContext.parallelize([
 ### Analyzers
 
 ```python
-from pydeequ.analyzers import *
+try:
+    from pydeequ.analyzers import *
+except Exception:
+    from pydeequ3.analyzers import *
 
 analysisResult = AnalysisRunner(spark) \
                     .onData(df) \
@@ -70,7 +73,10 @@ analysisResult_df.show()
 ### Profile
 
 ```python
-from pydeequ.profiles import *
+try:
+    from pydeequ.profiles import *
+except Exception:
+    from pydeequ3.profiles import *
 
 result = ColumnProfilerRunner(spark) \
     .onData(df) \
@@ -83,7 +89,10 @@ for col, profile in result.profiles.items():
 ### Constraint Suggestions
 
 ```python
-from pydeequ.suggestions import *
+try:
+    from pydeequ.suggestions import *
+except Exception:
+    from pydeequ3.suggestions import *
 
 suggestionResult = ConstraintSuggestionRunner(spark) \
              .onData(df) \
@@ -97,8 +106,13 @@ print(suggestionResult)
 ### Constraint Verification
 
 ```python
-from pydeequ.checks import *
-from pydeequ.verification import *
+try:
+    from pydeequ.checks import *
+    from pydeequ.verification import *
+except Exception:
+    from pydeequ3.checks import *
+    from pydeequ3.verification import *
+
 
 check = Check(spark, CheckLevel.Warning, "Review Check")
 
@@ -122,8 +136,13 @@ checkResult_df.show()
 Save to a Metrics Repository by adding the `useRepository()` and `saveOrAppendResult()` calls to your Analysis Runner.
 
 ```python
-from pydeequ.repository import *
-from pydeequ.analyzers import *
+try:
+    from pydeequ.repository import *
+    from pydeequ.analyzers import *
+except Exception:
+    from pydeequ3.repository import *
+    from pydeequ3.analyzers import *
+
 
 metrics_file = FileSystemMetricsRepository.helper_metrics_file(spark, 'metrics.json')
 repository = FileSystemMetricsRepository(spark, metrics_file)

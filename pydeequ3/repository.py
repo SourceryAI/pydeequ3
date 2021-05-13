@@ -9,7 +9,7 @@ import time
 
 from pyspark.sql import DataFrame, SparkSession
 
-from pydeequ.scala_utils import to_scala_map, to_scala_seq
+from pydeequ3.scala_utils import to_scala_map, to_scala_seq
 
 
 class MetricsRepository:

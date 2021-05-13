@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """ Profiles file for all the Profiles classes in Deequ"""
-# from pydeequ.analyzers import *
-# from pydeequ.metrics import *
+# from pydeequ3.analyzers import *
+# from pydeequ3.metrics import *
 import json
 from collections import namedtuple
 
 from pyspark.sql import DataFrame, SparkSession
 
-from pydeequ.analyzers import KLLParameters
-from pydeequ.metrics import BucketDistribution
-from pydeequ.pandas_utils import ensure_pyspark_df
-from pydeequ.scala_utils import (
+from pydeequ3.analyzers import KLLParameters
+from pydeequ3.metrics import BucketDistribution
+from pydeequ3.pandas_utils import ensure_pyspark_df
+from pydeequ3.scala_utils import (
     get_or_else_none,
     java_list_to_python_list,
     scala_map_to_dict,

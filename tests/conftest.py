@@ -2,7 +2,7 @@
 # pylint: disable=redefined-outer-name
 import logging
 
-from pydeequ import set_deequ_maven_config
+from pydeequ3 import set_deequ_maven_config
 
 
 # @pytest.yield_fixture(autouse=True)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from pydeequ.scala_utils import ScalaFunction1, ScalaFunction2
+from pydeequ3.scala_utils import ScalaFunction1, ScalaFunction2
 from tests.conftest import setup_pyspark
 
 

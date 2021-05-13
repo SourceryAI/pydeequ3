@@ -6,9 +6,9 @@ import json
 
 from pyspark.sql import DataFrame, SparkSession, SQLContext
 
-from pydeequ.pandas_utils import ensure_pyspark_df
-from pydeequ.repository import MetricsRepository, ResultKey
-from pydeequ.scala_utils import to_scala_seq
+from pydeequ3.pandas_utils import ensure_pyspark_df
+from pydeequ3.repository import MetricsRepository, ResultKey
+from pydeequ3.scala_utils import to_scala_seq
 
 
 class _AnalyzerObject:

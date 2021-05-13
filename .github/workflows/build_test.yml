@@ -16,22 +16,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
+        hadoop: [3.2]
+        java: [11]
+        spark-version: [3.0.2]
+        python-version: [3.7, 3.8]
+        scala-version: [2.12]
+        # include:
           # - java: 8
           #   hadoop: 2.7
           #   spark-version: 2.4.7
           #   python-version: 3.7.7
           #   scala: 2.11
-          - java: 11
-            hadoop: 3.2
-            spark-version: 3.0.2
-            python-version: 3.7
-            scala: 2.12
-          - java: 8
-            hadoop: 3.2
-            spark-version: 3.0.2
-            python-version: 3.7
-            scala: 2.12
+          # - java: 11
+          #   hadoop: 3.2
+          #   spark-version: 3.0.2
+          #   python-version: 3.7
+          #   scala: 2.12
+          # - java: 8
+          #   hadoop: 3.2
+          #   spark-version: 3.0.2
+          #   python-version: 3.7
+          #   scala: 2.12
           # ToDO: Check deequ with 3.1.1
           # - java: 11
           #   hadoop: 3.2

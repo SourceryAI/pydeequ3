@@ -8,7 +8,7 @@ import json
 
 from pyspark.sql import DataFrame, SparkSession
 
-from pydeequ.pandas_utils import ensure_pyspark_df
+from pydeequ3.pandas_utils import ensure_pyspark_df
 
 
 class ConstraintSuggestionRunner:

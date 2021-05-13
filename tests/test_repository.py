@@ -4,10 +4,10 @@ import unittest
 import pytest
 from pyspark.sql import Row
 
-from pydeequ.analyzers import *
-from pydeequ.checks import *
-from pydeequ.repository import *
-from pydeequ.verification import *
+from pydeequ3.analyzers import *
+from pydeequ3.checks import *
+from pydeequ3.repository import *
+from pydeequ3.verification import *
 from tests.conftest import setup_pyspark
 
 

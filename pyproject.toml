@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "pydeequ"
-version = "0.1.5"
-description = ""
+name = "pydeequ3"
+version = "0.1.6"
+description = "Pydeequ3: PySpark 3 support for deequ [AWSClone]"
 authors = ["ChethanUK <chethanuk@outlook.com>"]
 
 [tool.poetry.dependencies]

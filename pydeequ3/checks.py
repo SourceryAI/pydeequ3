@@ -3,7 +3,7 @@ from enum import Enum
 
 from pyspark.sql import SparkSession
 
-from pydeequ.scala_utils import ScalaFunction1, to_scala_seq
+from pydeequ3.scala_utils import ScalaFunction1, to_scala_seq
 
 # TODO implement custom assertions
 # TODO implement all methods without outside class dependencies

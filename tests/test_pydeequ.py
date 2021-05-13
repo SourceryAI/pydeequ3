@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from pydeequ import __version__
+from pydeequ3 import __version__
 
 
 def test_version():

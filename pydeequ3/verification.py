@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-# from pydeequ.analyzers import *
-# from pydeequ.anomaly_detection import *
+# from pydeequ3.analyzers import *
+# from pydeequ3.anomaly_detection import *
 import json
 
 from pyspark import SQLContext
 from pyspark.sql import DataFrame, SparkSession
 
-from pydeequ.analyzers import AnalysisRunBuilder
-from pydeequ.checks import Check
-from pydeequ.pandas_utils import ensure_pyspark_df
+from pydeequ3.analyzers import AnalysisRunBuilder
+from pydeequ3.checks import Check
+from pydeequ3.pandas_utils import ensure_pyspark_df
 
 # TODO integrate Analyzer context
 

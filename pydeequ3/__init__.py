@@ -16,10 +16,10 @@ __version__ = "0.1.5"
 
 from pyspark.sql import SparkSession
 
-from pydeequ.analyzers import AnalysisRunner
-from pydeequ.checks import Check, CheckLevel
-from pydeequ.configs import set_deequ_maven_config
-from pydeequ.profiles import ColumnProfilerRunner
+from pydeequ3.analyzers import AnalysisRunner
+from pydeequ3.checks import Check, CheckLevel
+from pydeequ3.configs import set_deequ_maven_config
+from pydeequ3.profiles import ColumnProfilerRunner
 
 deequ_maven_coord = set_deequ_maven_config()
 f2j_maven_coord = "net.sourceforge.f2j:arpack_combined_all"

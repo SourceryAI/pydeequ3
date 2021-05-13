@@ -5,12 +5,12 @@ import unittest
 import numpy as np
 from pandas import DataFrame as pandasDF
 
-from pydeequ import PyDeequSession
-from pydeequ.analyzers import *
-from pydeequ.checks import *
-from pydeequ.profiles import ColumnProfilerRunner
-from pydeequ.suggestions import *
-from pydeequ.verification import *
+from pydeequ3 import PyDeequSession
+from pydeequ3.analyzers import *
+from pydeequ3.checks import *
+from pydeequ3.profiles import ColumnProfilerRunner
+from pydeequ3.suggestions import *
+from pydeequ3.verification import *
 from tests.conftest import setup_pyspark
 
 

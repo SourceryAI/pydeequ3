@@ -4,9 +4,9 @@ import unittest
 import pytest
 from pyspark.sql import DataFrame, Row
 
-from pydeequ.analyzers import KLLParameters
-from pydeequ.checks import *
-from pydeequ.verification import *
+from pydeequ3.analyzers import KLLParameters
+from pydeequ3.checks import *
+from pydeequ3.verification import *
 from tests.conftest import setup_pyspark
 
 

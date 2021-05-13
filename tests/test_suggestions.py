@@ -4,7 +4,7 @@ import unittest
 
 from pyspark.sql import Row
 
-from pydeequ.suggestions import (
+from pydeequ3.suggestions import (
     DEFAULT,
     CategoricalRangeRule,
     CompleteIfCompleteRule,

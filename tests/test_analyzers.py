@@ -4,8 +4,8 @@ import unittest
 import pytest
 from pyspark.sql import Row
 
-from pydeequ import PyDeequSession
-from pydeequ.analyzers import (
+from pydeequ3 import PyDeequSession
+from pydeequ3.analyzers import (
     AnalyzerContext,
     ApproxCountDistinct,
     ApproxQuantile,

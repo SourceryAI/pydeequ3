@@ -3,8 +3,8 @@ import unittest
 
 from pyspark.sql import Row
 
-from pydeequ.analyzers import KLLParameters
-from pydeequ.profiles import ColumnProfilerRunBuilder, ColumnProfilerRunner
+from pydeequ3.analyzers import KLLParameters
+from pydeequ3.profiles import ColumnProfilerRunBuilder, ColumnProfilerRunner
 from tests.conftest import setup_pyspark
 
 
